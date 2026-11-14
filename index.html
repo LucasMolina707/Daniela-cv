@@ -9,19 +9,24 @@
     <meta name="robots" content="index, follow">
 
     <!-- Open Graph / Meta etiquetas para precargas en Redes Sociales (WhatsApp, LinkedIn, Facebook, Telegram) -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Daniela Alejandra Jiménez Mora | Hoja de Vida Profesional">
-    <meta property="og:description" content="Tecnóloga en Gestión Administrativa | Estudiante de Administración de Empresas. Experiencia en laboratorio clínico, medicina prepagada y servicio al usuario.">
+    <meta property="og:type" content="profile">
+    <meta property="og:site_name" content="Daniela Alejandra Jiménez Mora - CV">
+    <meta property="og:title" content="Daniela Alejandra Jiménez Mora">
+    <meta property="og:description" content="Tecnóloga en Gestión Administrativa | Estudiante de Administración de Empresas. Experiencia en Laboratorio Clínico, Medicina Prepagada y Servicio al Usuario.">
     <meta property="og:image" content="img/og-preview.jpg">
-    <meta property="og:image:alt" content="Tarjeta de Presentación - Daniela Alejandra Jiménez Mora">
+    <meta property="og:image:secure_url" content="img/og-preview.jpg">
     <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="680">
+    <meta property="og:image:height" content="680">
+    <meta property="og:image:alt" content="Daniela Alejandra Jiménez Mora - Tecnóloga en Gestión Administrativa & Estudiante de Administración de Empresas">
     <meta property="og:locale" content="es_CO">
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Daniela Alejandra Jiménez Mora | Hoja de Vida Profesional">
-    <meta name="twitter:description" content="Tecnóloga en Gestión Administrativa | Estudiante de Administración de Empresas. Perfil administrativo y sector salud.">
+    <meta name="twitter:title" content="Daniela Alejandra Jiménez Mora">
+    <meta name="twitter:description" content="Tecnóloga en Gestión Administrativa | Estudiante de Administración de Empresas. Perfil Administrativo & Salud.">
     <meta name="twitter:image" content="img/og-preview.jpg">
+    <meta name="twitter:image:alt" content="Daniela Alejandra Jiménez Mora - CV">
 
     <!-- Precarga de recursos clave para máximo rendimiento -->
     <link rel="preload" href="img/foto-perfil.jpg" as="image">
@@ -704,47 +709,51 @@
         }
 
         /* ========================================================
-           BOTÓN DE IMPRESIÓN INFERIOR
+           BOTÓN MINIMALISTA WEB (SOLO ICONO, NO DESCRIPTIVO)
            ======================================================== */
         .bottom-print-bar {
-            margin-top: 24px;
+            margin-top: 26px;
             display: flex;
+            align-items: center;
             justify-content: center;
             z-index: 10;
         }
 
-        .btn-bottom-print {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(244, 114, 182, 0.12) 100%);
+        .btn-minimal-trigger {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
-            border: 1px solid rgba(255, 215, 230, 0.3);
+            border: 1px solid rgba(255, 215, 230, 0.25);
             color: #ffffff;
-            padding: 12px 28px;
-            border-radius: 14px;
-            font-family: 'Syne', sans-serif;
-            font-size: 14px;
-            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 15px rgba(244, 114, 182, 0.15);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .btn-bottom-print:hover {
-            background: linear-gradient(135deg, rgba(244, 114, 182, 0.22) 0%, rgba(192, 132, 252, 0.18) 100%);
-            color: #ffffff;
+        .btn-minimal-trigger:hover {
+            transform: translateY(-2px) scale(1.08);
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.3) 0%, rgba(168, 85, 247, 0.3) 100%);
             border-color: var(--accent-rose);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-rose-glow), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), 0 0 24px rgba(244, 114, 182, 0.4);
         }
 
-        .btn-bottom-print i {
-            width: 18px;
-            height: 18px;
+        .btn-minimal-trigger i {
+            width: 20px;
+            height: 20px;
             color: var(--accent-rose-soft);
             stroke-width: 2.2;
+            transition: transform 0.25s ease;
+        }
+
+        .btn-minimal-trigger:hover i {
+            transform: scale(1.1);
+            color: #ffffff;
         }
 
         /* ========================================================
@@ -884,13 +893,14 @@
             display: flex;
             justify-content: flex-end;
             gap: 10px;
+            flex-wrap: wrap;
         }
 
         .btn-cancel {
             background: transparent;
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: #cbd5e1;
-            padding: 8px 18px;
+            padding: 9px 18px;
             border-radius: 8px;
             font-size: 13px;
             font-weight: 600;
@@ -903,25 +913,78 @@
             color: #ffffff;
         }
 
-        .btn-confirm-print {
+        .btn-modal-action {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: linear-gradient(135deg, #ec4899 0%, #a855f7 100%);
             border: none;
             color: #ffffff;
-            padding: 8px 22px;
+            padding: 9px 20px;
             border-radius: 8px;
             font-size: 13px;
             font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.35);
             transition: all 0.2s;
+        }
+
+        .btn-confirm-print {
+            background: linear-gradient(135deg, #ec4899 0%, #a855f7 100%);
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.35);
         }
 
         .btn-confirm-print:hover {
             transform: translateY(-1px);
             box-shadow: 0 6px 20px rgba(236, 72, 153, 0.5);
+        }
+
+        .btn-confirm-share {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 215, 230, 0.35);
+            color: #f8fafc;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-confirm-share:hover {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: rgba(255, 215, 230, 0.6);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.3);
+        }
+
+        .toast-notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(40px);
+            background: rgba(22, 16, 34, 0.95);
+            border: 1px solid rgba(255, 215, 230, 0.35);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(244, 114, 182, 0.3);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            color: #ffffff;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 2000;
+        }
+
+        .toast-notification.active {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
+
+        .toast-notification i {
+            color: #34d399;
+            width: 18px;
+            height: 18px;
         }
 
         /* ========================================================
@@ -1105,6 +1168,7 @@
             .modal-overlay,
             .photo-lightbox-overlay,
             .photo-expand-badge,
+            .toast-notification,
             body::before {
                 display: none !important;
             }
@@ -2086,15 +2150,14 @@
 
     </main>
 
-    <!-- BOTÓN DE IMPRESIÓN INFERIOR -->
+    <!-- BOTÓN MINIMALISTA INFERIOR (SIN TEXTO DESCRIPTIVO) -->
     <div class="bottom-print-bar">
-        <button class="btn-bottom-print" onclick="openPrintModal()">
+        <button class="btn-minimal-trigger" onclick="openPrintModal()" aria-label="Opciones de documento">
             <i data-lucide="printer"></i>
-            Imprimir o Exportar CV
         </button>
     </div>
 
-    <!-- MODAL SELECTOR DE FORMATOS -->
+    <!-- MODAL SELECTOR DE FORMATOS DE IMPRESIÓN / PDF -->
     <div class="modal-overlay" id="printModal" onclick="handleOverlayClick(event)">
         <div class="modal-glass-card">
             <div class="modal-header">
@@ -2144,12 +2207,22 @@
 
             <div class="modal-actions">
                 <button type="button" class="btn-cancel" onclick="closePrintModal()">Cancelar</button>
-                <button type="button" class="btn-confirm-print" onclick="executeSelectedPrint()">
+                <button type="button" class="btn-modal-action btn-confirm-share" onclick="shareCurriculum()">
+                    <i data-lucide="share-2"></i>
+                    Descargar PDF y Compartir
+                </button>
+                <button type="button" class="btn-modal-action btn-confirm-print" onclick="executeSelectedPrint()">
                     <i data-lucide="printer"></i>
                     Imprimir Documento
                 </button>
             </div>
         </div>
+    </div>
+
+    <!-- NOTIFICACIÓN TOAST FLOTANTE -->
+    <div class="toast-notification" id="toastNotification">
+        <i data-lucide="check-circle-2"></i>
+        <span id="toastMessage">Enlace copiado al portapapeles</span>
     </div>
 
     <!-- MODAL LIGHTBOX EXPANDIDO PARA FOTO DE PERFIL (FUTURISTA & ELEGANTE) -->
@@ -2239,6 +2312,91 @@
             setTimeout(() => {
                 window.print();
             }, 150);
+        }
+
+        // Función especializada para dispositivos móviles (Android / iOS) y escritorio:
+        // Activa la generación y descarga en PDF para el formato seleccionado y abre el menú nativo de compartir
+        function shareCurriculum() {
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            const isAndroid = /Android/.test(navigator.userAgent);
+            const isMobile = isIOS || isAndroid || (window.innerWidth <= 768);
+
+            // 1. Sincronizar el modo de impresión según el formato elegido
+            document.body.className = `print-mode-${currentSelectedFormat}`;
+            closePrintModal();
+
+            const shareData = {
+                title: 'CV - Daniela Alejandra Jiménez Mora',
+                text: 'Hoja de Vida de Daniela Alejandra Jiménez Mora | Tecnóloga en Gestión Administrativa & Salud',
+                url: window.location.href
+            };
+
+            // 2. Disparar flujo según plataforma
+            if (isMobile) {
+                // Notificación informativa para el usuario móvil
+                const platformMsg = isIOS 
+                    ? 'Preparando hoja de vida: selecciona Guardar en Archivos / Compartir en tu iPhone' 
+                    : 'Preparando hoja de vida: selecciona Guardar como PDF / Compartir en tu dispositivo';
+                showToast(platformMsg);
+
+                setTimeout(() => {
+                    // En móviles, window.print() abre el diálogo nativo del sistema operativo (iOS / Android)
+                    // que permite 'Guardar como PDF' o 'Compartir' directamente a WhatsApp, Correo, etc.
+                    window.print();
+
+                    // Adicionalmente, si el sistema admite navigator.share tras cerrar la ventana, se ofrece el compartir directo
+                    if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+                        setTimeout(() => {
+                            navigator.share(shareData).catch(() => {});
+                        }, 1200);
+                    }
+                }, 300);
+            } else {
+                // En escritorio: abrir diálogo para guardar PDF e invocar compartir / copiar enlace
+                showToast('Descarga tu PDF en la ventana de impresión y comparte el enlace');
+                setTimeout(() => {
+                    window.print();
+                    if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+                        navigator.share(shareData).catch(() => copyToClipboard(window.location.href));
+                    } else {
+                        copyToClipboard(window.location.href);
+                    }
+                }, 200);
+            }
+        }
+
+        function copyToClipboard(text) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast('Enlace de la hoja de vida copiado al portapapeles');
+                }).catch(() => {
+                    fallbackCopy(text);
+                });
+            } else {
+                fallbackCopy(text);
+            }
+        }
+
+        function fallbackCopy(text) {
+            const tempInput = document.createElement('input');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            showToast('Enlace copiado al portapapeles');
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toastNotification');
+            const toastMsg = document.getElementById('toastMessage');
+            if (toast && toastMsg) {
+                toastMsg.textContent = message;
+                toast.classList.add('active');
+                setTimeout(() => {
+                    toast.classList.remove('active');
+                }, 3200);
+            }
         }
 
         // Inicializar iconos Lucide
