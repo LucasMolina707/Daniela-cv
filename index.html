@@ -38,6 +38,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
     <!-- Iconos vectoriales profesionales estilo React Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Scripts de generación PDF y utilidades cliente -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
         :root {
@@ -149,24 +152,31 @@
         }
 
         /* ========================================================
-           CONTENEDOR MAESTRO DE VIDRIO (CARTA: 215.9mm x 279.4mm)
+           CONTENEDOR MAESTRO DE VIDRIO (WEB FLUIDA Y MODERNA)
            ======================================================== */
         .cv-sheet {
-            width: 215.9mm;
-            height: 279.4mm;
-            max-height: 279.4mm;
-            overflow: hidden;
+            width: 100%;
+            max-width: 1080px;
+            margin: 0 auto;
+            min-height: auto;
             background: rgba(255, 255, 255, 0.042);
             backdrop-filter: var(--glass-blur-heavy);
             -webkit-backdrop-filter: var(--glass-blur-heavy);
             border: 1px solid var(--glass-border);
             box-shadow: var(--shadow-glass);
-            border-radius: 20px;
+            border-radius: 22px;
             display: flex;
             flex-direction: column;
             position: relative;
             z-index: 2;
             box-sizing: border-box;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .cv-sheet:hover {
+            border-color: rgba(255, 215, 230, 0.28);
+            box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.8), 0 0 40px rgba(244, 114, 182, 0.15);
         }
 
         /* Bisel superior de cristal en degradé Oro Rosa & Cuarzo */
@@ -349,28 +359,28 @@
         }
 
         /* ========================================================
-           CUERPO DE 2 COLUMNAS (58% / 42%) CON DISTRIBUCIÓN EQUILIBRADA
+           CUERPO DE 2 COLUMNAS (60% / 40%) CON DISTRIBUCIÓN RESPONSIVA
            ======================================================== */
         .cv-body {
             display: grid;
-            grid-template-columns: 58% 42%;
+            grid-template-columns: 1.4fr 1fr;
             flex: 1;
-            padding: 16px 22px 22px 22px;
-            gap: 16px;
-            overflow: hidden;
+            padding: 24px 28px 28px 28px;
+            gap: 20px;
+            overflow: visible;
             background: rgba(14, 10, 22, 0.25);
         }
 
         .col-main {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 18px;
         }
 
         .col-side {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 18px;
         }
 
         .glass-module {
@@ -378,8 +388,8 @@
             backdrop-filter: var(--glass-blur);
             -webkit-backdrop-filter: var(--glass-blur);
             border: 1px solid var(--glass-border);
-            border-radius: 14px;
-            padding: 14px 16px;
+            border-radius: 16px;
+            padding: 18px 20px;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
             position: relative;
             overflow: hidden;
@@ -391,6 +401,8 @@
         .glass-module:hover {
             background: var(--glass-card-hover);
             border-color: rgba(244, 114, 182, 0.35);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35), 0 0 15px rgba(244, 114, 182, 0.1);
         }
 
         .glass-module::before {
@@ -927,6 +939,16 @@
             transition: all 0.2s;
         }
 
+        .btn-confirm-download {
+            background: linear-gradient(135deg, #ec4899 0%, #a855f7 100%);
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.35);
+        }
+
+        .btn-confirm-download:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(236, 72, 153, 0.5);
+        }
+
         .btn-confirm-print {
             background: linear-gradient(135deg, #ec4899 0%, #a855f7 100%);
             box-shadow: 0 4px 15px rgba(236, 72, 153, 0.35);
@@ -935,20 +957,6 @@
         .btn-confirm-print:hover {
             transform: translateY(-1px);
             box-shadow: 0 6px 20px rgba(236, 72, 153, 0.5);
-        }
-
-        .btn-confirm-share {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 215, 230, 0.35);
-            color: #f8fafc;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .btn-confirm-share:hover {
-            background: rgba(255, 255, 255, 0.18);
-            border-color: rgba(255, 215, 230, 0.6);
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.3);
         }
 
         .toast-notification {
@@ -1141,6 +1149,261 @@
             border-radius: 50%;
             background: #34d399;
             box-shadow: 0 0 8px #34d399;
+        }
+
+        /* ========================================================
+           RESPONSIVE DESIGN (MÓVILES, TABLETS & COMPUTADORAS)
+           ======================================================== */
+        @media screen and (min-width: 993px) {
+            body {
+                padding: 40px 24px 70px 24px;
+            }
+
+            .cv-header {
+                padding: 26px 32px 24px 32px;
+            }
+
+            .header-content h1 {
+                font-size: 24px;
+            }
+
+            .header-content h2 {
+                font-size: 13px;
+                margin-bottom: 14px;
+            }
+
+            .contact-grid {
+                font-size: 11.2px;
+                gap: 7px 22px;
+            }
+
+            .section-title {
+                font-size: 13px;
+            }
+
+            .profile-text {
+                font-size: 11.6px;
+                line-height: 1.62;
+            }
+
+            .item-role {
+                font-size: 12.8px;
+            }
+
+            .item-company {
+                font-size: 11.5px;
+            }
+
+            .item-list li {
+                font-size: 11.2px;
+                line-height: 1.54;
+            }
+
+            .edu-degree {
+                font-size: 11.8px;
+            }
+
+            .edu-institution {
+                font-size: 10.4px;
+            }
+
+            .tag-pill {
+                font-size: 10.5px;
+                padding: 4px 10px;
+            }
+
+            .course-box {
+                font-size: 11px;
+            }
+
+            .ref-name {
+                font-size: 11.5px;
+            }
+
+            .ref-role {
+                font-size: 10px;
+            }
+
+            .ref-phone {
+                font-size: 10.2px;
+            }
+        }
+
+        @media screen and (max-width: 992px) {
+            body {
+                padding: 20px 14px 50px 14px;
+                height: auto;
+                min-height: 100vh;
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+
+            .cv-sheet {
+                width: 100%;
+                min-height: auto;
+                height: auto;
+                max-width: 820px;
+                border-radius: 18px;
+            }
+
+            .cv-body {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                padding: 20px;
+                overflow: visible;
+            }
+
+            .col-main, .col-side {
+                gap: 16px;
+            }
+        }
+
+        @media screen and (max-width: 640px) {
+            body {
+                padding: 12px 10px 40px 10px;
+            }
+
+            .cv-header {
+                flex-direction: column;
+                text-align: center;
+                padding: 22px 16px 20px 16px;
+                gap: 16px;
+            }
+
+            .photo-container {
+                width: 96px;
+                height: 96px;
+            }
+
+            .header-content h1 {
+                font-size: 20px;
+            }
+
+            .header-content h2 {
+                font-size: 11.8px;
+                margin-bottom: 14px;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 7px;
+                text-align: left;
+                width: 100%;
+            }
+
+            .contact-item {
+                justify-content: flex-start;
+                padding: 7px 11px;
+                font-size: 10.8px;
+            }
+
+            .cv-body {
+                padding: 14px;
+                gap: 14px;
+            }
+
+            .glass-module {
+                padding: 14px 16px;
+                border-radius: 14px;
+            }
+
+            .section-title {
+                font-size: 12px;
+            }
+
+            .profile-text {
+                font-size: 11px;
+                line-height: 1.55;
+            }
+
+            .item-head {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+
+            .item-period, .edu-year {
+                align-self: flex-start;
+            }
+
+            .item-role {
+                font-size: 12px;
+            }
+
+            .item-company {
+                font-size: 11px;
+            }
+
+            .item-list li {
+                font-size: 10.6px;
+                line-height: 1.48;
+            }
+
+            .edu-degree {
+                font-size: 11px;
+            }
+
+            .edu-institution {
+                font-size: 9.8px;
+            }
+
+            .ref-grid-2col {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .modal-glass-card {
+                padding: 20px 16px;
+                border-radius: 18px;
+            }
+
+            .modal-header h3 {
+                font-size: 15px;
+            }
+
+            .format-card {
+                padding: 12px 12px;
+                gap: 10px;
+            }
+
+            .format-info h4 {
+                font-size: 12.8px;
+            }
+
+            .format-desc {
+                font-size: 11px;
+            }
+
+            .modal-actions {
+                flex-direction: column-reverse;
+                width: 100%;
+                gap: 8px;
+            }
+
+            .btn-modal-action, .btn-cancel {
+                width: 100%;
+                justify-content: center;
+                padding: 11px 16px;
+            }
+
+            .photo-lightbox-card {
+                padding: 24px 18px;
+                border-radius: 20px;
+            }
+
+            .photo-frame-halo {
+                width: 200px;
+                height: 200px;
+                margin-bottom: 16px;
+            }
+
+            .photo-lightbox-name {
+                font-size: 17.5px;
+            }
+
+            .photo-lightbox-title {
+                font-size: 11.2px;
+            }
         }
 
         /* ========================================================
@@ -2207,11 +2470,11 @@
 
             <div class="modal-actions">
                 <button type="button" class="btn-cancel" onclick="closePrintModal()">Cancelar</button>
-                <button type="button" class="btn-modal-action btn-confirm-share" onclick="shareCurriculum()">
-                    <i data-lucide="share-2"></i>
-                    Descargar PDF y Compartir
+                <button type="button" class="btn-modal-action btn-confirm-download" onclick="downloadCurriculumPDF()" title="Descargar archivo PDF directamente">
+                    <i data-lucide="file-down"></i>
+                    Descargar PDF
                 </button>
-                <button type="button" class="btn-modal-action btn-confirm-print" onclick="executeSelectedPrint()">
+                <button type="button" class="btn-modal-action btn-confirm-print" onclick="executeSelectedPrint()" title="Abrir cuadro de impresión">
                     <i data-lucide="printer"></i>
                     Imprimir Documento
                 </button>
@@ -2305,6 +2568,7 @@
             if (radio) radio.checked = true;
         }
 
+        // Ejecución de impresión directa
         function executeSelectedPrint() {
             document.body.className = `print-mode-${currentSelectedFormat}`;
             closePrintModal();
@@ -2314,54 +2578,67 @@
             }, 150);
         }
 
-        // Función especializada para dispositivos móviles (Android / iOS) y escritorio:
-        // Activa la generación y descarga en PDF para el formato seleccionado y abre el menú nativo de compartir
-        function shareCurriculum() {
-            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-            const isAndroid = /Android/.test(navigator.userAgent);
-            const isMobile = isIOS || isAndroid || (window.innerWidth <= 768);
-
-            // 1. Sincronizar el modo de impresión según el formato elegido
+        // Descarga directa a archivo PDF sin invocar window.print()
+        async function downloadCurriculumPDF() {
             document.body.className = `print-mode-${currentSelectedFormat}`;
             closePrintModal();
 
+            showToast('Generando archivo PDF...');
+
+            const sheetElement = document.querySelector('.cv-sheet');
+            const formatName = currentSelectedFormat === 'ats' ? 'ATS-Harvard' : (currentSelectedFormat === 'creative' ? 'Creativo' : 'Ejecutivo');
+            const fileName = `CV-Daniela-Jimenez-${formatName}.pdf`;
+
+            try {
+                const jsPDFConstructor = (window.jspdf && window.jspdf.jsPDF) ? window.jspdf.jsPDF : window.jsPDF;
+
+                if (window.html2canvas && jsPDFConstructor) {
+                    const canvas = await html2canvas(sheetElement, {
+                        scale: 2,
+                        useCORS: false,
+                        allowTaint: true,
+                        backgroundColor: '#ffffff',
+                        logging: false
+                    });
+
+                    const imgData = canvas.toDataURL('image/jpeg', 0.98);
+                    
+                    // Tamaño Carta exacto en milímetros (215.9 x 279.4)
+                    const pdf = new jsPDFConstructor({
+                        orientation: 'portrait',
+                        unit: 'mm',
+                        format: 'letter'
+                    });
+
+                    pdf.addImage(imgData, 'JPEG', 0, 0, 215.9, 279.4);
+                    pdf.save(fileName);
+
+                    showToast('Documento PDF descargado con éxito');
+                } else {
+                    throw new Error('Librerías PDF aún no inicializadas');
+                }
+            } catch (error) {
+                console.warn('Descarga por renderizador alternativo:', error);
+                // Si la seguridad del navegador local bloquea el canvas tainted, ejecutamos la descarga con blob/print controlado
+                showToast('Iniciando guardado de documento...');
+                setTimeout(() => {
+                    window.print();
+                }, 200);
+            }
+        }
+
+        // Función para compartir enlace del CV
+        function shareCurriculum() {
             const shareData = {
                 title: 'CV - Daniela Alejandra Jiménez Mora',
                 text: 'Hoja de Vida de Daniela Alejandra Jiménez Mora | Tecnóloga en Gestión Administrativa & Salud',
                 url: window.location.href
             };
 
-            // 2. Disparar flujo según plataforma
-            if (isMobile) {
-                // Notificación informativa para el usuario móvil
-                const platformMsg = isIOS 
-                    ? 'Preparando hoja de vida: selecciona Guardar en Archivos / Compartir en tu iPhone' 
-                    : 'Preparando hoja de vida: selecciona Guardar como PDF / Compartir en tu dispositivo';
-                showToast(platformMsg);
-
-                setTimeout(() => {
-                    // En móviles, window.print() abre el diálogo nativo del sistema operativo (iOS / Android)
-                    // que permite 'Guardar como PDF' o 'Compartir' directamente a WhatsApp, Correo, etc.
-                    window.print();
-
-                    // Adicionalmente, si el sistema admite navigator.share tras cerrar la ventana, se ofrece el compartir directo
-                    if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
-                        setTimeout(() => {
-                            navigator.share(shareData).catch(() => {});
-                        }, 1200);
-                    }
-                }, 300);
+            if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+                navigator.share(shareData).catch(() => copyToClipboard(window.location.href));
             } else {
-                // En escritorio: abrir diálogo para guardar PDF e invocar compartir / copiar enlace
-                showToast('Descarga tu PDF en la ventana de impresión y comparte el enlace');
-                setTimeout(() => {
-                    window.print();
-                    if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
-                        navigator.share(shareData).catch(() => copyToClipboard(window.location.href));
-                    } else {
-                        copyToClipboard(window.location.href);
-                    }
-                }, 200);
+                copyToClipboard(window.location.href);
             }
         }
 
